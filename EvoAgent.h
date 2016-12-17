@@ -528,21 +528,18 @@ public:
 	{
 		uint32_t** result = new uint32_t*[chrome.seed_count];
 
-		mt19937 mt_rand = SeededRandomEngine();
-		uniform_int_distribution<int> byte_dist(0, UINT8_MAX);
-
 		for (uint8_t s=0; s < chrome.seed_count; s++)
 		{
-			mt_rand.seed(chrome.mod_nseed[s]);
+			srand(chrome.mod_nseed[s]);
 			result[s] = new uint32_t[UINT8_MAX];
 			ui32ui8 randBytes;
 
 			for (uint8_t i=0; i < UINT8_MAX; i++)
 			{
-				randBytes.ui8_1 = byte_dist(mt_rand);
-				randBytes.ui8_2 = byte_dist(mt_rand);
-				randBytes.ui8_3 = byte_dist(mt_rand);
-				randBytes.ui8_4 = byte_dist(mt_rand);
+				randBytes.ui8_1 = rand_range(0, UINT8_MAX);
+				randBytes.ui8_2 = rand_range(0, UINT8_MAX);
+				randBytes.ui8_3 = rand_range(0, UINT8_MAX);
+				randBytes.ui8_4 = rand_range(0, UINT8_MAX);
 				result[s][i] = randBytes.data;
 			}
 		}
