@@ -126,7 +126,7 @@ uint32_t wMax, uint32_t hMax, uint32_t cMax, uint32_t oSize, InputConfig iConfig
 	genusCount(0), generation(0)
 {
 	uint32_t wSize, hSize, cSize, cLim, rRes;
-	uint8_t chrCnt, mMin, mMax, dMin, dMax;
+	uint8_t chrCnt, achCnt, mMin, mMax, dMin, dMax;
 
 	mt19937 mt_rand = SeededRandomEngine();
 
@@ -172,19 +172,19 @@ uint32_t wMax, uint32_t hMax, uint32_t cMax, uint32_t oSize, InputConfig iConfig
 			species.id = IntToStr(g) + "-" + IntToStr(s);
 			cout << "Generating species " << species.id << " ...\n\n";
 
-			chrCnt = max(1, chrCnt + cs_dist(mt_rand));
+			achCnt = min(GLOBALS::max_chromos, uint8_t(chrCnt + cs_dist(mt_rand)));
 
 			species.Generate(aCnt, cSize);
 			species.ResetIter();
 
 			EvoAgent adam = EvoAgent(iArray, iConfig, oSize, wSize,
-							hSize, chrCnt, cLim, mMin, dMin, mMax, dMax);
+							hSize, achCnt, cLim, mMin, dMin, mMax, dMax);
 
 			Chromosome* GX = adam.CreateGamete();
 			Chromosome* GY = adam.CreateGamete();
 
 			EvoAgent eve = EvoAgent(GX, GY, iArray, iConfig,
-						   cLim, chrCnt, oSize, wSize, hSize, false);
+						   cLim, achCnt, oSize, wSize, hSize, false);
 
 			for (uint32_t a = 0; a < aCnt; ++a)
 			{
