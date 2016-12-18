@@ -10,8 +10,8 @@
 using namespace std;
 
 double GLOBALS::health_decay	=	0.001; //higher = agents die faster
-uint32_t GLOBALS::mutate_step	=	128; //higher = lower number of of mutations
-uint8_t GLOBALS::mutate_shift	=	20;  //higher = single mutations have more affect
+uint32_t GLOBALS::mutate_step	=	128; //higher = lower number of mutations
+uint8_t GLOBALS::mutate_shift	=	20;  //higher = single mutations can have more affect
 uint8_t GLOBALS::mutate_shirr	=	20;  //higher = more variation in mutation resistance
 uint8_t GLOBALS::chromo_shift	=	4;   //higher = more variation in chromosome counts
 uint8_t GLOBALS::max_chromos	=	20;  //maximum number of agent chromosomes
@@ -75,7 +75,7 @@ int main()
 	Population pop = Population(5, 10, 5, 20000, 512, 256,
 					 256, 256, oSize, iConfig, inputArray);
 
-	// enter tha main training/evolution loop
+	// enter the main training/evolution loop
 	for (;pop.generation < genCnt; ++pop.generation)
 	{
 		uint32_t setIndex = set_dist(mt_rand); // pick a random training set
@@ -86,9 +86,9 @@ int main()
 		// loop through each entry in the training set
 		for (uint32_t e=0; e < setSize[setIndex]; e++)
 		{
-			// fill input arrays with data from entry e
+			// fill input arrays with data and run iteration
 			SetInputs(inputArray, setIndex, e);
-			pop.RunIteration(); // run the current iteration
+			pop.RunIteration();
 		}
 
 		pop.PrintFitVals(); //print fitness values for each species
